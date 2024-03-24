@@ -1,21 +1,10 @@
-# langchain
-from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.llms import Ollama
-
-# sap llm
-from llm_commons.proxy.base import set_proxy_version
-from llm_commons.langchain.proxy import init_llm, init_embedding_model
-
-set_proxy_version("btp")
-# set_proxy_version('aicore') # for an AI Core proxy
+from langchain_community.llms import Ollama
+from gen_ai_hub.proxy.langchain.init_models import init_llm
 
 
-def ollama(model="llama2"):
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-    return Ollama(model=model, callback_manager=callback_manager)
+def ollama(model="gemma"):
+    return Ollama(model=model)
 
 
-# https://github.tools.sap/AI-Playground-Projects/llm-commons
-def sapAI(model="gpt-4", temperature=0):
-    return init_llm(model, temperature=temperature, max_tokens=8000)
+def sapAI(model="gpt-4-32k", temperature=0):
+    return init_llm(model, temperature=temperature, max_tokens=1000)
